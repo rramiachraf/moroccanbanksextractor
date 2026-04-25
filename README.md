@@ -6,7 +6,8 @@ Parse Moroccan banks statements into useful data formats.
 ```sh
 pip install -r requirements.txt
 ```
-```MoroccanBanksExtractor.
+```
+MoroccanBanksExtractor.
 
 Usage:
     ./main.py extract [--json | --csv] <input_file>
@@ -19,4 +20,5 @@ Arguments:
 
 Options:
     -h, --help       Print this.
-    --version        Print version.```
+    --version        Print version.
+```
