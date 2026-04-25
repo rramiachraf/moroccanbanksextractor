@@ -1,6 +1,5 @@
 Parse Moroccan banks statements into useful data formats.    
----
-**⚠️ only Attijariwafa Bank is supported for now.**
+**⚠️ Only Attijariwafa Bank is supported for now.**
 
 
 ```sh
