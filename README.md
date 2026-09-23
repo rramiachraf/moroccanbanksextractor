@@ -1,8 +1,13 @@
-Parse Moroccan banks statements into useful data formats.    
+MoroccanBanksExtractor
 ---
-**⚠️ Only Attijariwafa Bank is supported for now.**
+Parse Moroccan banks statements into useful data formats.
+
+#### Notes:
+- **Python >= 3.10 is required.**
+- Only CIH bank and Attijariwafa bank are supported for now.
 
 
+## Usage
 ```sh
 pip install -r requirements.txt
 ```

@@ -17,11 +17,14 @@ Options:
 
 import json
 import os
+import sys
 from pathlib import Path
 
 from docopt import docopt
 
 import attijari
+import cih
+import utils
 from mcp_server import mcp
 
 if __name__ == "__main__":
@@ -38,9 +41,19 @@ if __name__ == "__main__":
 
         if not Path(input_file).exists():
             print("Input file not found")
-            exit(1)
+            sys.exit(1)
 
-        data = attijari.parse_statement(file_path=input_file)
+        data = {}
+        bank = utils.detect_bank(file_path=input_file)
+
+        match bank:
+            case "cih":
+                data = cih.parse_statement(file_path=input_file)
+            case "awb":
+                data = attijari.parse_statement(file_path=input_file)
+            case _:
+                print("Unkown or unsupported bank statement")
+                sys.exit(1)
 
         output_file = Path(
             os.getcwd(), f"statement_{data['start_date']}.{'csv' if is_csv else 'json'}"
@@ -56,11 +69,11 @@ if __name__ == "__main__":
 
             with open(output_file, "a") as f:
                 for t in data["transactions"]:
-                    f.write(
+                    f.writelines(
                         f'{t["transaction_date"]},"{t["label"]}",{t["value_date"]},{t["is_deposit"]},{t["amount"]}\n'
                     )
 
-            exit(0)
+            sys.exit(0)
 
         with open(output_file, "w") as f:
             f.write(json.dumps(data, default=str, indent=4))

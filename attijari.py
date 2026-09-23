@@ -1,5 +1,5 @@
 import re
-from datetime import date
+from datetime import UTC, date, datetime
 
 import pdfplumber
 
@@ -8,8 +8,8 @@ def parse_statement(file_path: str):
     transactions = []
     initial_balance = 0
     balance = 0
-    start_date = date.today()
-    end_date = date.today()
+    start_date = datetime.now(UTC)
+    end_date = datetime.now(UTC)
 
     with pdfplumber.open(file_path) as pdf:
         for page in pdf.pages:
