@@ -18,7 +18,7 @@ def parse_statement(file_path: str):
                     r"SOLDE\sDEPART\sAU\s:\s(\d{2}\/\d{2}\/\d{4})\s(.*)",
                     page.crop(bbox=(10, 292, 580, 303)).extract_text(),
                 )[0]
-                initial_balance = float(initial_balance_str.replace(",", "."))
+                initial_balance = float(initial_balance_str.replace(",", ".").replace(" ", ""))
 
                 [sd_day, sd_month, sd_year] = start_date_str.split("/")
                 start_date = date(int(sd_year), int(sd_month), int(sd_day))
@@ -28,7 +28,7 @@ def parse_statement(file_path: str):
                     r"NOUVEAU\sSOLDE\sAU\s(\d{2}\/\d{2}\/\d{4})\s(.*)",
                     page.crop(bbox=(70, 688, 580, 700)).extract_text(),
                 )[0]
-                balance = float(balance_str.replace(",", "."))
+                balance = float(balance_str.replace(",", ".").replace(" ", ""))
 
                 [ed_day, ed_month, ed_year] = end_date_str.split("/")
                 end_date = date(int(ed_year), int(ed_month), int(ed_day))
@@ -62,7 +62,7 @@ def parse_statement(file_path: str):
                                     "label": label,
                                     "value_date": v_date,
                                     "is_deposit": col[3] == "",
-                                    "amount": float(amount.replace(",", ".")),
+                                    "amount": float(amount.replace(",", ".").replace(" ", "")),
                                 }
                             )
 
