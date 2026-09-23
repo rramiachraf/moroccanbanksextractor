@@ -61,7 +61,7 @@ def parse_statement(file_path: str):
                                     "transaction_date": t_date,
                                     "label": label,
                                     "value_date": v_date,
-                                    "is_deposit": col[4] == "",
+                                    "is_deposit": col[3] == "",
                                     "amount": float(amount.replace(",", ".")),
                                 }
                             )
