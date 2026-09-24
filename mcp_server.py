@@ -1,6 +1,8 @@
 from mcp.server.fastmcp import FastMCP
 
 import attijari
+import cih
+import utils
 
 mcp = FastMCP("extract_bank_statement")
 
@@ -11,7 +13,15 @@ async def extract_bank_statement(file_path: str) -> str:
     Args:
         - Takes only the full path of the Bank statement PDF
     """
-    data = attijari.parse_statement(file_path)
+    data = {}
+    bank = utils.detect_bank(file_path)
+    match bank:
+        case "cih":
+            data = cih.parse_statement(file_path)
+        case "awb":
+            data = attijari.parse_statement(file_path)
+        case _:
+            return "Unkown or unsupported bank statement"
     response = rf"""List of transactions between {data["start_date"]} and {data["end_date"]}, the initial balance initially was {data["initial_balance"]}, and by the end of the period it was {data["balance"]}
     """
     for i, t in enumerate(data["transactions"]):
